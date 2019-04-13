@@ -1,0 +1,6 @@
+
+- name: configure mac
+  include: 1-configuration.yml
+
+- name: setup dev environment
+  include: 9-development.yml

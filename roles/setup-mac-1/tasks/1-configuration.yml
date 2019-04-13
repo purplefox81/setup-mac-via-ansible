@@ -1,0 +1,39 @@
+---
+# prepare the environment
+
+- name: display the welcome message
+  debug:
+    msg:
+      - "{{ myenv.welcome_message }}"
+
+- name: display basic info about the instance and the user
+  debug:
+    msg: 
+      - "System {{ inventory_hostname }}"
+      - "User {{ ansible_user }}"
+      - "Home {{ ansible_env.HOME }}"
+      - "PWD {{ ansible_env.PWD }}"
+      - "Environment Variables"
+      - "{{ ansible_env }}"		# to reference, use ansible_env.xxx
+      - "Self-defined Variables"	
+      - "{{ myenv }}"			# to reference, use myenv.xxx
+
+- name: display all variables/facts known for a host (use -vvv to enable this)
+  debug:
+    var: hostvars['{{ inventory_hostname }}']
+    verbosity: 3
+
+- name: generate ssh key
+  shell: 
+    cmd: cat /dev/zero | ssh-keygen -q -t rsa -N ""
+  args:
+    executable: /bin/bash
+    creates: '{{ ansible_env.HOME }}/.ssh/id_rsa'
+
+- name: create personal workspace directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ ansible_env.HOME }}/a"

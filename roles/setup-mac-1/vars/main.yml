@@ -1,0 +1,45 @@
+---
+
+# centralized configuration variables
+
+myenv:
+  welcome_message: "Welcome to Local Mac Setup Playbook"
+  github_default_prefix: "git@github.com:purplefox81"
+  github_learning_prefix: "git@github.com:purplefox-learning"
+
+not_needed_anymore:
+  - java8
+
+# install applications using brew
+brew_applications:
+  - wget
+  - youtube-dl
+
+# install applications using brew cask
+brew_cask_applications:
+  - google-chrome
+
+dev_brew_applications:
+  - httpie
+
+dev_brew_cask_applications:
+  - java8
+  - iterm2
+  - visual-studio-code
+  - docker
+  - minikube
+  - miniconda
+
+downloads:
+  zwift:
+    name: Zwift
+    url: http://cdn.zwift.com/app/ZwiftOSX.dmg
+    dest: "{{ansible_env.HOME}}/Downloads/ZwiftOSX.dmg"
+
+github_default_repos:
+  - my-personal-notes
+  - learning-algorithms
+  - learning-how-to-interview
+
+github_learning_repos:
+  - learning-spring-boot-2

@@ -1,0 +1,70 @@
+---
+# install setup local development environment
+
+- name: install dev related homebrew applications
+  homebrew:
+    name: "{{dev_brew_applications}}"
+    state: present
+
+- name: install dev related homebrew cask applications
+  homebrew_cask:
+    name: "{{dev_brew_cask_applications}}"
+    state: present
+
+
+- name: create personal workspace directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ ansible_env.HOME }}/a/git-personal-default"
+    - "{{ ansible_env.HOME }}/a/git-personal-learning"
+    - "{{ ansible_env.HOME }}/a/git-work"
+
+
+- name: clone personal repositories (category=default)
+  git:
+    repo: "{{ myenv.github_default_prefix }}/{{ item }}.git"
+    dest: "{{ ansible_env.HOME }}/a/git-personal-default/{{ item }}"
+    version: master
+    update: no
+    accept_hostkey: yes
+  become: no
+  with_items: "{{github_default_repos}}"
+
+
+- name: clone personal repositories (category=learning)
+  git:
+    repo: "{{ myenv.github_learning_prefix }}/{{ item }}.git"
+    dest: "{{ ansible_env.HOME }}/a/git-personal-learning/{{ item }}"
+    version: master
+    update: no
+    accept_hostkey: yes
+  become: no
+  with_items: "{{github_learning_repos}}"
+
+
+- name: copy .bash_profile
+  copy:
+    src: "{{ ansible_env.HOME }}/a/git-personal-default/my-personal-notes/mac/_SAMPLE_bash_profile"
+    dest: "{{ ansible_env.HOME }}/.bash_profile"
+    mode: 0644
+    force: no
+    #backup: yes
+
+- name: copy .bashrc
+  copy:
+    src: "{{ ansible_env.HOME }}/a/git-personal-default/my-personal-notes/mac/_SAMPLE_bashrc"
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+    mode: 0644
+    force: no
+    backup: yes
+
+- name: copy .bash_aliases
+  copy:
+    src: "{{ ansible_env.HOME }}/a/git-personal-default/my-personal-notes/mac/_SAMPLE_bash_aliases"
+    dest: "{{ ansible_env.HOME }}/.bash_aliases"
+    mode: 0644
+    force: no
+    #backup: yes

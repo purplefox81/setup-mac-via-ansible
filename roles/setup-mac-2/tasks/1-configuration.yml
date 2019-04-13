@@ -1,0 +1,19 @@
+---
+# prepare the environment
+
+- name: display the welcome message
+  debug:
+    msg:
+      - "{{ myenv.welcome_message }}"
+
+- name: display basic info about the instance and the user
+  debug:
+    msg: 
+      - "System {{ inventory_hostname }}"
+      - "User {{ ansible_user }}"
+      - "Home {{ ansible_env.HOME }}"
+      - "PWD {{ ansible_env.PWD }}"
+      - "Environment Variables"
+      - "{{ ansible_env }}"		# to reference, use ansible_env.xxx
+      - "Self-defined Variables"	
+      - "{{ myenv }}"			# to reference, use myenv.xxx

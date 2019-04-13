@@ -1,0 +1,12 @@
+---
+
+# centralized configuration variables
+
+myenv:
+  welcome_message: "Welcome to Local Mac Setup Playbook"
+
+uninstall_brew:
+  - httpie
+
+uninstall_brew_cask:
+  - iterm2

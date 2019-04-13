@@ -1,0 +1,7 @@
+
+
+- name: basic configuration
+  include: 1-configuration.yml
+
+- name: uninstall some applications
+  include: 9-adhoc-uninstallation.yml
