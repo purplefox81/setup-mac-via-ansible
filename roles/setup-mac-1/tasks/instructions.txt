@@ -1,0 +1,10 @@
+Complete these tasks before running setup-mac-2
+- install iterm2 shell integration
+- install miniconda by running /usr/local/Caskroom/miniconda/x.x.x/Miniconda3-x.x.x-MacOSX-x86_64.sh
+- sync visual code by installing 'settings sync' extension
+  - press 'option+shift+d' to sync settings down to the new mac OR
+  - press cmd+shift+p to open the command pallet, type 'sync' in the textbox, choose the download settings option
+  - go to github to generate a temporary personal access token, and copy the token id to clipboard
+  - paste the token id to the textbox, then paste the gist id 2e188ada9c5875db1ab5f05e3838ea6f
+  - full synchronization of all personal settings will complete in less than 5 minutes
+- start docker and disable its auto update in its preferences menu
