@@ -3,12 +3,11 @@
 # centralized configuration variables
 
 myenv:
-  welcome_message: "Welcome to Local Mac Setup Playbook"
-  github_default_prefix: "git@github.com:purplefox81"
-  github_learning_prefix: "git@github.com:purplefox-learning"
+  role_specific_var: "is defined here"
 
-not_needed_anymore:
-  - java8
+github:
+  default_repo_url_prefix: "git@github.com:purplefox81"
+  learning_repo_url_prefix: "git@github.com:purplefox-learning"
 
 # install applications using brew
 brew_applications:
@@ -30,16 +29,36 @@ dev_brew_cask_applications:
   - minikube
   - miniconda
 
-downloads:
-  zwift:
-    name: Zwift
-    url: http://cdn.zwift.com/app/ZwiftOSX.dmg
-    dest: "{{ansible_env.HOME}}/Downloads/ZwiftOSX.dmg"
-
 github_default_repos:
   - my-personal-notes
   - learning-algorithms
   - learning-how-to-interview
 
 github_learning_repos:
+  - starter-sample-application
+  - starter-sample-springboot
   - learning-spring-boot-2
+
+
+#note that version should be a string ("4.8") not a number (4.8) for string comparison later
+gradle_version: "4.8"
+gradle_zipfile: "gradle-{{gradle_version}}-all.zip"
+gradle_folder:  "gradle-{{gradle_version}}"
+
+maven_major: "3"
+maven_version: "3.6.1"
+maven_zipfile: "apache-maven-{{maven_version}}-bin.zip"
+maven_folder:  "apache-maven-{{maven_version}}"
+
+downloads:
+  zwift:
+    name: Zwift
+    url: http://cdn.zwift.com/app/ZwiftOSX.dmg
+    dest: "{{ ansible_cache_dir }}/ZwiftOSX.dmg"
+
+# yes for update, no for no update
+up_to_date:
+  # WARNING: git operation will OVERWRITE all local commits that have not been pushed to the server
+  # NOTE: git operation will fail if there is local changes, which is expected
+  git: yes      # "git pull" on all registered repositories
+  brew: no      # "brew update"

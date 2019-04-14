@@ -1,12 +1,18 @@
 
 - name: configure mac
-  include: 1-configuration.yml
+  include: 1-init-config.yml
 
 - name: install applications
-  include: 2-applications.yml 
+  include: 2-brew.yml 
 
 - name: setup dev environment
-  include: 3-development.yml
+  include: 3-dev-git.yml
+
+- name: install dev packages
+  include: 3-dev-packages.yml
+
+- name: install dev packages
+  include: 4-downloads.yml
 
 - name: display some instructions
   debug: 

@@ -3,4 +3,4 @@
 # centralized configuration variables
 
 myenv:
-  welcome_message: "Welcome to Local Mac Setup Playbook"
+  role_specific_var: "is defined here"

@@ -1,0 +1,81 @@
+---
+# install setup local development environment
+
+- name: check existing gradle status
+  shell: "gradle -version | grep -w 'Gradle' | awk '{print $2}'"
+  register: gradle_check
+  changed_when: False
+
+- name: check existing gradle status (alternative way)
+  stat:
+    path: "/usr/local/share/{{gradle_folder}}"
+  register: gradle_check_old
+
+- name: check existing gradle zip
+  stat:
+    path: "{{ ansible_cache_dir }}/{{ gradle_zipfile }}"
+  register: gradle_zip_check
+
+- name: installed gradle version
+  debug: 
+    msg: "{{ gradle_check.stdout }}"
+
+- block:
+  - name: download gradle {{gradle_version}}
+    get_url: 
+      url: "https://services.gradle.org/distributions/{{gradle_zipfile}}"
+      dest: "{{ ansible_cache_dir }}/{{ gradle_zipfile }}"
+    when: gradle_zip_check.stat.exists == false
+  
+  - name: extract gradle zip
+    unarchive:
+      src: "{{ ansible_cache_dir }}/{{ gradle_zipfile }}"
+      dest: /usr/local/share
+      remote_src: yes
+
+  - name: create symbolic link for gradle
+    file:
+      src: "/usr/local/share/{{gradle_folder}}/bin/gradle"
+      dest: /usr/local/bin/gradle
+      state: link
+  
+  when: gradle_check.stdout != gradle_version
+  #when: gradle_check.stdout == ""
+  #when: gradle_check_old.stat.exists == false
+
+
+- name: check existing maven status
+  shell: "mvn -version | grep -w 'Apache Maven' | awk '{print $3}'"
+  register: maven_check
+  changed_when: False
+
+- name: check existing maven zip
+  stat:
+    path: "{{ ansible_cache_dir }}/{{ maven_zipfile }}"
+  register: maven_zip_check
+
+- name: installed maven version
+  debug: "msg={{maven_check.stdout}}"
+
+- block:
+  - name: download maven {{maven_version}}
+    get_url: 
+      url: "http://www-us.apache.org/dist/maven/maven-{{ maven_major }}/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.zip"
+      dest: "{{ ansible_cache_dir }}/{{ maven_zipfile }}"
+      timeout: 300
+    when: maven_zip_check.stat.exists == false
+
+  - name: extract maven zip
+    unarchive:
+      src: "{{ ansible_cache_dir }}/{{ maven_zipfile }}"
+      dest: /usr/local/share
+      remote_src: yes
+
+  - name: create symbolic link for maven
+    file:
+      src: "/usr/local/share/{{maven_folder}}/bin/mvn"
+      dest: /usr/local/bin/mvn
+      state: link
+      
+  when: maven_check.stdout != maven_version
+  #when: maven_check.stdout == ""

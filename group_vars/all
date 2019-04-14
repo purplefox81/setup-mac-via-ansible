@@ -1,0 +1,4 @@
+welcome_message: "Welcome to Local Mac Setup Playbook"
+ansible_cache_dir: ~/Downloads/temp-ansible-installers
+software_install_dir: /usr/local/share
+user_binaries: /usr/local/bin

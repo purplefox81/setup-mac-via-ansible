@@ -25,10 +25,10 @@
 
 - name: clone personal repositories (category=default)
   git:
-    repo: "{{ myenv.github_default_prefix }}/{{ item }}.git"
+    repo: "{{ github.default_repo_url_prefix }}/{{ item }}.git"
     dest: "{{ ansible_env.HOME }}/a/git-personal-default/{{ item }}"
     version: master
-    update: no
+    update: "{{ up_to_date.git }}"
     accept_hostkey: yes
   become: no
   with_items: "{{github_default_repos}}"
@@ -36,7 +36,7 @@
 
 - name: clone personal repositories (category=learning)
   git:
-    repo: "{{ myenv.github_learning_prefix }}/{{ item }}.git"
+    repo: "{{ github.learning_repo_url_prefix }}/{{ item }}.git"
     dest: "{{ ansible_env.HOME }}/a/git-personal-learning/{{ item }}"
     version: master
     update: no
@@ -59,7 +59,7 @@
     dest: "{{ ansible_env.HOME }}/.bashrc"
     mode: 0644
     force: no
-    backup: yes
+    #backup: yes
 
 - name: copy .bash_aliases
   copy:

@@ -1,1 +1,1 @@
-ansible-playbook -i hosts setup-mac-1.yml -vv
+ansible-playbook -i hosts setup-mac-1.yml -v

@@ -4,7 +4,7 @@
 - name: display the welcome message
   debug:
     msg:
-      - "{{ myenv.welcome_message }}"
+      - "{{ welcome_message }}"
 
 - name: display basic info about the instance and the user
   debug:
@@ -13,15 +13,23 @@
       - "User {{ ansible_user }}"
       - "Home {{ ansible_env.HOME }}"
       - "PWD {{ ansible_env.PWD }}"
+      - "Variables defined in group_vars"
+      - "{{ ansible_cache_dir }}"
       - "Environment Variables"
       - "{{ ansible_env }}"		# to reference, use ansible_env.xxx
-      - "Self-defined Variables"	
+      - "Role-specific Variables"	
       - "{{ myenv }}"			# to reference, use myenv.xxx
 
 - name: display all variables/facts known for a host (use -vvv to enable this)
   debug:
     var: hostvars['{{ inventory_hostname }}']
     verbosity: 3
+
+- name: create temp ansible directories
+  file:
+    path: "{{ ansible_cache_dir }}"
+    state: directory
+    mode: 0755
 
 - name: generate ssh key
   shell: 
