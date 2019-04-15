@@ -7,21 +7,33 @@
   changed_when: False
   tags:
     - docker
+    - container
+
+- name: pull docker images
+  command: "{{ item }}"
+  with_items: 
+    - docker pull alpine:3.9
+    - docker pull ubuntu:18.04
+    - docker pull mysql:5.7
+  when: docker_check != ""
+  tags:
+    - docker
 
 - block:
-  - name: pull docker images
-    command: "{{ item }}"
-    with_items: 
-      - docker pull alpine:3.9
-      - docker pull ubuntu:18.04
-      - docker pull mysql:5.7
-  
-  - name: show all existing docker images
-    command: docker image ls
-    changed_when: false
+
+  - name: check if mysql is listening
+    wait_for:
+      port: 3306
+      state: started
+      delay: 0
+      timeout: 3
+      msg: "timeout waiting for port 3306 to respond"
+    register: mysql_port_check
+    ignore_errors: true
 
   - name: start mysql container
     command: docker container run -d --name ycm_mysql -e MYSQL_DATABASE=testground -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 mysql:5.7
+    when: mysql_port_check is failed
 
   - name: check if mysql is listening
     wait_for:
@@ -34,4 +46,4 @@
   
   when: docker_check != ""
   tags:
-    - docker
+    - container
