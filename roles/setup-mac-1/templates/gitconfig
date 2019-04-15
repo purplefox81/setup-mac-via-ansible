@@ -1,0 +1,11 @@
+[user]
+	email = chenming.yang@gmail.com
+	name = Yang ChenMing
+[alias]
+        co = checkout
+        gs = status
+        st = status
+[push]
+        default = simple
+[color]
+	ui = true

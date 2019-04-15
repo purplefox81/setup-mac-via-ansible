@@ -1,0 +1,32 @@
+---
+# install setup local development environment
+
+- name: copy .bash_profile
+  copy:
+    src: "{{ ansible_env.HOME }}/a/git-personal-default/my-personal-notes/mac/_SAMPLE_bash_profile"
+    dest: "{{ ansible_env.HOME }}/.bash_profile"
+    mode: 0644
+    force: no
+    #backup: yes
+  tags:
+    - bashenv
+
+- name: copy .bashrc
+  copy:
+    src: "{{ ansible_env.HOME }}/a/git-personal-default/my-personal-notes/mac/_SAMPLE_bashrc"
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+    mode: 0644
+    force: no
+    #backup: yes
+  tags:
+    - bashenv
+
+- name: copy .bash_aliases
+  copy:
+    src: "{{ ansible_env.HOME }}/a/git-personal-default/my-personal-notes/mac/_SAMPLE_bash_aliases"
+    dest: "{{ ansible_env.HOME }}/.bash_aliases"
+    mode: 0644
+    force: no
+    #backup: yes
+  tags:
+    - bashenv

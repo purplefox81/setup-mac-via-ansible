@@ -4,28 +4,54 @@
   shell: 'yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"' 
   args:
     creates: /usr/local/bin/brew
+  tags:
+    - brew
 
 - name: ensure homebrew is updated 
   homebrew:
     state: latest
     update_homebrew: yes
   when: up_to_date.brew
+  tags:
+    - brew
 
 - name: tap homebrew caskroom/cask
   homebrew_tap:
     tap: "caskroom/cask"
+  tags:
+    - brew
 
 #- name: tap homebrew neovim/homebrew-neovim 
 #  homebrew_tap:
 #    tap: "neovim/homebrew-neovim"
 #    state: present
+#  tags:
+#    - brew
 
 - name: install homebrew applications
   homebrew:
     name: "{{brew_applications}}"
     state: present
+  tags:
+    - brew
 
 - name: install homebrew cask applications
   homebrew_cask:
     name: "{{brew_cask_applications}}"
     state: present
+  tags:
+    - brew
+
+- name: install dev related homebrew applications
+  homebrew:
+    name: "{{dev_brew_applications}}"
+    state: present
+  tags:
+    - brew
+
+- name: install dev related homebrew cask applications
+  homebrew_cask:
+    name: "{{dev_brew_cask_applications}}"
+    state: present
+  tags:
+    - brew

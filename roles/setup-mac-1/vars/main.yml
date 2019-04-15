@@ -40,6 +40,7 @@ github_learning_repos:
   - learning-spring-boot-2
 
 
+
 #note that version should be a string ("4.8") not a number (4.8) for string comparison later
 gradle_version: "4.8"
 gradle_zipfile: "gradle-{{gradle_version}}-all.zip"
@@ -50,15 +51,27 @@ maven_version: "3.6.1"
 maven_zipfile: "apache-maven-{{maven_version}}-bin.zip"
 maven_folder:  "apache-maven-{{maven_version}}"
 
+nvm_dir: "{{ansible_env.HOME}}/.nvm"    # a local install, /usr/local/nvm for a global install
+nvm_version: "0.34.0"
+nvm_profile: ".bashrc"                  # options are .profile, .bashrc, .bash_profile, .zshrc"
+nodejs_version: "v8.15.1"               # v8.15.1 or v10.15.3 etc
+
+
+
 downloads:
   zwift:
     name: Zwift
     url: http://cdn.zwift.com/app/ZwiftOSX.dmg
     dest: "{{ ansible_cache_dir }}/ZwiftOSX.dmg"
 
+
+
 # yes for update, no for no update
+# stay with "no" unless you know exactly the side effect of a "yes"
 up_to_date:
   # WARNING: git operation will OVERWRITE all local commits that have not been pushed to the server
   # NOTE: git operation will fail if there is local changes, which is expected
-  git: yes      # "git pull" on all registered repositories
+  git: no      # "git pull" on all registered repositories
   brew: no      # "brew update"
+
+

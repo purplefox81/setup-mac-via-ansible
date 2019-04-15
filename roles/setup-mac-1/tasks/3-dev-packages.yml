@@ -5,20 +5,28 @@
   shell: "gradle -version | grep -w 'Gradle' | awk '{print $2}'"
   register: gradle_check
   changed_when: False
+  tags:
+    - gradle
 
 - name: check existing gradle status (alternative way)
   stat:
     path: "/usr/local/share/{{gradle_folder}}"
   register: gradle_check_old
+  tags:
+    - gradle
 
 - name: check existing gradle zip
   stat:
     path: "{{ ansible_cache_dir }}/{{ gradle_zipfile }}"
   register: gradle_zip_check
+  tags:
+    - gradle
 
 - name: installed gradle version
   debug: 
     msg: "{{ gradle_check.stdout }}"
+  tags:
+    - gradle
 
 - block:
   - name: download gradle {{gradle_version}}
@@ -42,20 +50,28 @@
   when: gradle_check.stdout != gradle_version
   #when: gradle_check.stdout == ""
   #when: gradle_check_old.stat.exists == false
+  tags:
+    - gradle
 
 
 - name: check existing maven status
   shell: "mvn -version | grep -w 'Apache Maven' | awk '{print $3}'"
   register: maven_check
   changed_when: False
+  tags:
+    - maven
 
 - name: check existing maven zip
   stat:
     path: "{{ ansible_cache_dir }}/{{ maven_zipfile }}"
   register: maven_zip_check
+  tags:
+    - maven
 
 - name: installed maven version
   debug: "msg={{maven_check.stdout}}"
+  tags:
+    - maven
 
 - block:
   - name: download maven {{maven_version}}
@@ -79,3 +95,5 @@
       
   when: maven_check.stdout != maven_version
   #when: maven_check.stdout == ""
+  tags:
+    - maven

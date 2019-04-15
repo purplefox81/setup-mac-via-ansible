@@ -5,6 +5,8 @@
   debug:
     msg:
       - "{{ welcome_message }}"
+  tags:
+    - init
 
 - name: display basic info about the instance and the user
   debug:
@@ -19,17 +21,15 @@
       - "{{ ansible_env }}"		# to reference, use ansible_env.xxx
       - "Role-specific Variables"	
       - "{{ myenv }}"			# to reference, use myenv.xxx
+  tags:
+    - init
 
 - name: display all variables/facts known for a host (use -vvv to enable this)
   debug:
     var: hostvars['{{ inventory_hostname }}']
     verbosity: 3
-
-- name: create temp ansible directories
-  file:
-    path: "{{ ansible_cache_dir }}"
-    state: directory
-    mode: 0755
+  tags:
+    - init
 
 - name: generate ssh key
   shell: 
@@ -37,6 +37,16 @@
   args:
     executable: /bin/bash
     creates: '{{ ansible_env.HOME }}/.ssh/id_rsa'
+  tags:
+    - init
+
+- name: create temp ansible directories
+  file:
+    path: "{{ ansible_cache_dir }}"
+    state: directory
+    mode: 0755
+  tags:
+    - init
 
 - name: create personal workspace directories
   file:
@@ -45,3 +55,5 @@
     mode: 0755
   with_items:
     - "{{ ansible_env.HOME }}/a"
+  tags:
+    - init

@@ -1,0 +1,86 @@
+---
+# install setup local development environment
+
+# after nvm is install, there are some scripts being added to .bashrc
+# in this case usually we should open a new terminal to continue the installation process
+# we can't start a new session in the middle of a fully automated ansible script
+# the work around is to use "bash -ic whateverCommand", the key here is the -i switch
+# so that the "nvm install v1.1.1" is executed as if a new session is loaded for the given command
+
+# also throughout this yaml file, there are some "no job control in this shell" messages 
+# are printed on the console, which does not affect the execution of the script itself
+# however when the stdout is empty, ansible will treat the step as failed
+
+- name: check nvm version
+  shell: bash -ic "nvm --version"
+  register: nvm_check
+  ignore_errors: true
+  changed_when: false
+  tags:
+    - nodejs
+
+- block:
+  - name: create nvm dir if it does not exist
+    file:
+      path: "{{ nvm_dir }}"
+      state: directory
+  
+  - name: install nvm
+    shell: "curl -o- https://raw.githubusercontent.com/creationix/nvm/v{{ nvm_version }}/install.sh | NVM_DIR={{ nvm_dir }} PROFILE={{ nvm_profile }} bash"
+    args:
+      warn: false
+    register: out
+    no_log: true
+  - name: install nvm (pretty print logs)
+    debug: var=out.stdout_lines
+
+  when: nvm_check is failed
+  #when: nvm_check.stdout == ""
+  tags:
+    - nodejs
+
+- name: recheck nvm version
+  shell: bash -ic "nvm --version"
+  register: nvm_check
+  ignore_errors: true
+  changed_when: false
+  tags:
+    - nodejs
+
+- name: installed nvm version
+  debug: "msg={{nvm_check.stdout}}"
+  tags:
+    - nodejs
+
+
+
+- name: check npm version
+  # nvm list will output list in a messy manner, that is why we use -o (instead of -w) to keep it simple
+  # the extra spaces here are on purpose, to filter some recommended versions printed along with nvm list
+  # when the given version is not found, stdout is empty, stderr is not empty, ansible will treat it as an error
+  # that is why we need a "ignore_errors" here
+  shell: bash -ic "nvm list | grep -o '      {{ nodejs_version }}'"
+  register: npm_check
+  ignore_errors: true
+  changed_when: false
+  tags:
+    - nodejs
+
+- name: install npm/node
+  shell: bash -ic "nvm install {{ nodejs_version }}"
+  when: npm_check.stdout == ""
+  tags:
+    - nodejs
+
+- name: recheck npm version
+  shell: bash -ic "nvm list | grep -o '      {{ nodejs_version }}'"
+  register: npm_check
+  changed_when: false
+  tags:
+    - nodejs
+
+- name: installed npm version
+  # nvm will print the version multiple times, that is why we just print the first line in the array
+  debug: "msg={{npm_check.stdout_lines[0]}}"
+  tags:
+    - nodejs

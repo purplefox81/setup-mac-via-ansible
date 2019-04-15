@@ -8,8 +8,14 @@
 - name: setup dev environment
   include: 3-dev-git.yml
 
+- name: setup dev environment
+  include: 3-dev-bash-env.yml
+
 - name: install dev packages
   include: 3-dev-packages.yml
+
+- name: install nvm/npm/node packages
+  include: 3-dev-nvm-npm.yml
 
 - name: install dev packages
   include: 4-downloads.yml
