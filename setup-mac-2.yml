@@ -1,5 +1,0 @@
----
-
-- hosts: localmac
-  roles:
-    - setup-mac-2

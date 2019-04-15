@@ -20,6 +20,7 @@ brew_cask_applications:
 
 dev_brew_applications:
   - httpie
+  #- cowsay
 
 dev_brew_cask_applications:
   - java8

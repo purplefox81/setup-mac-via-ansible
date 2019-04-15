@@ -3,10 +3,10 @@
 # centralized configuration variables
 
 myenv:
-  role_specific_var: "is defined here"
+  welcome_message: "Teardown Mac"
 
 uninstall_brew:
-  - httpie
+  - cowsay
 
 uninstall_brew_cask:
   - iterm2

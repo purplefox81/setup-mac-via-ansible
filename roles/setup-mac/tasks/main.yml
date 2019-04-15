@@ -17,8 +17,11 @@
 - name: install nvm/npm/node packages
   include: 3-dev-nvm-npm.yml
 
-- name: install dev packages
-  include: 4-downloads.yml
+- name: prepare docker containers
+  include: 4-dev-docker.yml
+
+- name: download misc packages
+  include: 9-downloads.yml
 
 - name: display some instructions
   debug: 

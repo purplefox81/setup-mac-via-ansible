@@ -2,4 +2,4 @@
 
 - hosts: localmac
   roles:
-    - setup-mac-1
+    - setup-mac

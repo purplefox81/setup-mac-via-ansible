@@ -5,7 +5,7 @@
     name: "{{uninstall_brew}}"
     state: absent
 
-- name: uninstall cask applications using brew cask
-  homebrew_cask:
-    name: "{{uninstall_brew_cask}}"
-    state: absent 
+#- name: uninstall cask applications using brew cask
+#  homebrew_cask:
+#    name: "{{uninstall_brew_cask}}"
+#    state: absent 

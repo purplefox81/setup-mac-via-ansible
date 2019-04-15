@@ -7,3 +7,8 @@ clone the repository and run ./setup-mac-1.sh
 you may want to start a new terminal after running the setup script.
 
 setup-mac-2 and teardown-mac is not active currently.
+
+TODO:
+1. pull common docker images
+2. start mysql as a docker container
+3. install a mysql client, connect to mysql

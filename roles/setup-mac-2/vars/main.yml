@@ -1,6 +1,0 @@
----
-
-# centralized configuration variables
-
-myenv:
-  role_specific_var: "is defined here"
