@@ -15,4 +15,4 @@
 #### Future Plans
 
 TODO:
-* install a mysql client, connect to mysql
+* 

@@ -32,12 +32,11 @@ dev_brew_cask_applications:
 
 github_default_repos:
   - my-personal-notes
-  - learning-algorithms
-  - learning-how-to-interview
 
 github_learning_repos:
   - starter-sample-application
   - starter-sample-springboot
+  - starter-sample-springboot-mysql
   - learning-spring-boot-2
 
 
