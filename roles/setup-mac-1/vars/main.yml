@@ -69,9 +69,13 @@ downloads:
 # yes for update, no for no update
 # stay with "no" unless you know exactly the side effect of a "yes"
 up_to_date:
+  # switch to yes for a "brew update"
+  brew: no
+  # switch to yes for a "git pull" on all registered repositories
   # WARNING: git operation will OVERWRITE all local commits that have not been pushed to the server
-  # NOTE: git operation will fail if there is local changes, which is expected
-  git: no      # "git pull" on all registered repositories
-  brew: no      # "brew update"
+  # WARNING: i have configured my visual code to auto push upon every local commit
+  # NOTE: git operation will fail if there is local changes, which is normal and has no side effect
+  git: no
+  
 
 

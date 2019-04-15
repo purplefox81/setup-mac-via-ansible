@@ -22,4 +22,6 @@
 
 - name: display some instructions
   debug: 
-    msg: "{{ lookup('file', 'instructions.txt').split('\n') }}"
+    msg: "{{ lookup('template', 'instructions.txt').split('\n') }}"
+  tags:
+    - help
