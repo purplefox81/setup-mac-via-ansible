@@ -14,7 +14,11 @@
   with_items: 
     - docker pull alpine:3.9
     - docker pull ubuntu:18.04
+    - docker pull openjdk:8-jdk
+    - docker pull openjdk:8-jre-slim
     - docker pull mysql:5.7
+    # check out offical website for usages : https://github.com/nicolaka/netshoot
+    - docker pull nicolaka/netshoot:latest
   when: docker_check != ""
   tags:
     - docker
