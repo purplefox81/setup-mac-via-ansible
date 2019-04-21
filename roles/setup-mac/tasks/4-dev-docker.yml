@@ -17,7 +17,8 @@
     - docker pull openjdk:8-jdk
     - docker pull openjdk:8-jre-slim
     - docker pull mysql:5.7
-    # check out offical website for usages : https://github.com/nicolaka/netshoot
+    # check out offical website for usages : https://github.com/nicolaka/netshoot 
+    # and https://success.docker.com/article/troubleshooting-container-networking
     - docker pull nicolaka/netshoot:latest
   when: docker_check != ""
   tags:
